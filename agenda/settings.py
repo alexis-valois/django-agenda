@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'south',
     'personal_calender',
+    'usermanagement',
 )
 
 MIDDLEWARE_CLASSES = (
