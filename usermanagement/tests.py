@@ -7,9 +7,9 @@ class StatusTest(TestCase):
 
     def test_public(self):
         urls = [
-            {'url': '/user/login/', 'status': 200, 'template': 'registration/login.html'},
-            {'url': '/user/logout/', 'status': 302, 'template': 'registration/login.html'},
-            {'url': '/user/profile/', 'status': 302, 'template': 'registration/login.html'},
+            {'url': '/user/login/', 'status': 200, 'template': 'user/login.html'},
+            {'url': '/user/logout/', 'status': 302, 'template': 'user/login.html'},
+            {'url': '/user/profile/', 'status': 302, 'template': 'user/login.html'},
         ]
         for elem in urls:
             response = self.client.get(elem['url'])
@@ -39,4 +39,4 @@ class StatusTest(TestCase):
             'username': 'randomguy',
             'password': 'trytoguess',
         }, follow=True)
-        self.assertEquals(response.template_name, ['registration/profile.html'])
+        self.assertEquals(response.template_name, ['user/profile.html'])
