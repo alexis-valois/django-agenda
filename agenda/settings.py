@@ -142,6 +142,10 @@ SOUTH_TESTS_MIGRATE = False
 
 STATIC_URL = '/static/'
 
+LOGIN_URL = "/user/login/"
+
+LOGIN_REDIRECT_URL = "/user/profile/"
+
 try:
     from local_settings import *
 except:

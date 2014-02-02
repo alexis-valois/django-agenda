@@ -7,9 +7,9 @@ class StatusTest(TestCase):
 
     def test_public(self):
         urls = [
-            {'url': '/accounts/login/', 'status': 200, 'template': 'registration/login.html'},
-            {'url': '/accounts/logout/', 'status': 302, 'template': 'registration/login.html'},
-            {'url': '/accounts/profile/', 'status': 302, 'template': 'registration/login.html'},
+            {'url': '/user/login/', 'status': 200, 'template': 'registration/login.html'},
+            {'url': '/user/logout/', 'status': 302, 'template': 'registration/login.html'},
+            {'url': '/user/profile/', 'status': 302, 'template': 'registration/login.html'},
         ]
         for elem in urls:
             response = self.client.get(elem['url'])
@@ -35,7 +35,7 @@ class StatusTest(TestCase):
 
     def test_login(self):
         self.generate_user(username='randomguy')
-        response = self.client.post('/accounts/login/', {
+        response = self.client.post('/user/login/', {
             'username': 'randomguy',
             'password': 'trytoguess',
         }, follow=True)
