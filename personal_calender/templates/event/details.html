@@ -8,5 +8,14 @@
 <p>{{ event.description }}</p>
 <p>{{ event.date }}</p>
 <p>{{ event.lieu }}</p>
+
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Créer" />
+</form>
+{% for participant in event.evenement_participant_set.all %}
+{{ participant.participant }} {{ participant.get_status_display }}
+{% endfor %}
 </body>
 </html>
