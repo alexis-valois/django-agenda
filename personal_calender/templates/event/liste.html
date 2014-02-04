@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<ul>
+    {% for event in events %}
+    <li>
+        <h3><a href="{{ event.get_absolute_url }}">{{ event.nom }}</a></h3>
+        <p>le {{ event.date }}</p>
+        <p>à {{ event.lieu }}</p>
+        <p><a href="/agenda/{{ event.id }}/update/">Modifier l'énévement</a></p>
+    </li>
+    {% endfor %}
+</ul>
+<p>
+    <a href="/agenda/create/">Créer un nouvel événement</a>
+</p>
+</body>
+</html>

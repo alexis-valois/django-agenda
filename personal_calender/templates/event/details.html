@@ -8,6 +8,10 @@
 <p>{{ event.description }}</p>
 <p>{{ event.date }}</p>
 <p>{{ event.lieu }}</p>
+<form method="POST" action="/agenda/{{ event.id }}/delete/">
+    {% csrf_token %}
+    <input type="submit" value="Supprimer" />
+</form>
 
 <form action="" method="post">
     {% csrf_token %}

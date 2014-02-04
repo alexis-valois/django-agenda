@@ -12,6 +12,9 @@ class Evenement(models.Model):
     date = models.DateTimeField()
     lieu = models.TextField()
 
+    def get_absolute_url(self):
+        return "/agenda/%s/details" % self.id
+
 class Evenement_Participant(models.Model):
     class Meta:
         unique_together = ("evenement", "participant")

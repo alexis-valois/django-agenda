@@ -40,3 +40,25 @@ def delete(request, id, participant):
         )
         a_supprimer.delete()
     return HttpResponseRedirect('/agenda/%s/details/' %id)
+
+def liste(request):
+    events = Evenement.objects.all()
+    return render(request, 'event/liste.html', {'events': events})
+
+def delete_eve(request, id):
+    if request.method == "POST":
+        evenement = Evenement.objects.get(pk = id)
+        evenement.delete()
+        return HttpResponseRedirect('/agenda/liste/')
+
+def update_eve(request, id):
+    event = Evenement.objects.get(pk = id)
+    if request.method == "POST":
+        print request.POST
+        form = EventForm(request.POST, instance=event)
+        if form.is_valid():
+            a = form.save()
+            return HttpResponseRedirect('/agenda/%i/details/' % a.pk)
+    else:
+        form = EventForm(instance=event)
+    return render(request, 'event/create.html', {'form':form})
