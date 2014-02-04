@@ -7,3 +7,4 @@ urlpatterns = patterns('',
     url(r'^(\d+)/details/$',details),
     url(r'^(\d+)/participant/(\d+)/delete/$', delete),
 )
+
