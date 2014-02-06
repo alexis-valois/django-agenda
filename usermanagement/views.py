@@ -10,5 +10,5 @@ def create_account(request):
             return HttpResponseRedirect('/user/succes/')
     else:
         form = UserCreationForm()
-    return render(request, 'user/create.html', {'form':form})
+    return render(request,'user/create.html', {'form':form})
 

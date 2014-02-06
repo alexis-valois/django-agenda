@@ -7,16 +7,16 @@ class StatusTest(TestCase):
 
     def test_public(self):
         urls = [
-            {'url': '/user/login/', 'status': 200, 'template': 'user/login.html'},
-            {'url': '/user/logout/', 'status': 302, 'template': 'user/login.html'},
-            {'url': '/user/profile/', 'status': 302, 'template': 'user/login.html'},
+            {'url': '/user/login/', 'status': 200, 'templates': 'user/login.html'},
+            {'url': '/user/logout/', 'status': 302, 'templates': 'user/login.html'},
+            {'url': '/user/profile/', 'status': 302, 'templates': 'user/login.html'},
         ]
         for elem in urls:
             response = self.client.get(elem['url'])
             self.assertEquals(response.status_code, elem['status'])
 
             response = self.client.get(elem['url'], follow=True)
-            self.assertEquals(response.template_name, elem['template'])
+            self.assertEquals(response.template_name, elem['templates'])
 
     def generate_user(self, username):
         response = self.client.post('/user/create_account/', {

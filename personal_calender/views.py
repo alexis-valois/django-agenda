@@ -12,7 +12,7 @@ def create(request):
             return HttpResponseRedirect('/agenda/%i/details/'%event.pk)
     else:
         form = EventForm()
-    return render(request,'event/create.html', {'form':form})
+    return render(request,'personal_calender/event/create.html', {'form':form})
 
 def details(request, id):
     event = Evenement.objects.get(pk = id)
@@ -26,7 +26,7 @@ def details(request, id):
         participants = [user.pk for user in event.participants.all()]
         form.fields['participant'].queryset = User.objects.exclude(pk__in = participants)
         form.fields['evenement'].widget = HiddenInput()
-    return render(request, 'event/details.html',
+    return render(request, 'personal_calender/event/details.html',
                   {'event':event,
                    'form': form})
 
@@ -43,7 +43,7 @@ def delete(request, id, participant):
 
 def liste(request):
     events = Evenement.objects.all()
-    return render(request, 'event/liste.html', {'events': events})
+    return render(request, 'personal_calender/event/liste.html', {'events': events})
 
 def delete_eve(request, id):
     if request.method == "POST":
@@ -61,4 +61,4 @@ def update_eve(request, id):
             return HttpResponseRedirect('/agenda/%i/details/' % a.pk)
     else:
         form = EventForm(instance=event)
-    return render(request, 'event/create.html', {'form':form})
+    return render(request, 'personal_calender/event/create.html', {'form':form})
