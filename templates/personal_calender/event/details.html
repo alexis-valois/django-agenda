@@ -8,10 +8,10 @@
 <p>{{ event.description }}</p>
 <p>{{ event.date }}</p>
 <p>{{ event.lieu }}</p>
-<form method="POST" action="/agenda/{{ event.id }}/delete/">
-    {% csrf_token %}
-    <input type="submit" value="Supprimer" />
-</form>
+
+{% with delete_url=event.delete_url %}
+{% include "personal_calender/blocks/delete_form.html" %}
+{% endwith %}
 
 <form action="" method="post">
     {% csrf_token %}
@@ -20,10 +20,10 @@
 </form>
 {% for participant in event.evenement_participant_set.all %}
 {{ participant.participant }} {{ participant.get_status_display }}
-<form action="/agenda/{{ event.id }}/participant/{{ participant.id }}/delete/" method="POST">
-{% csrf_token %}
-<input type="submit" value="Supprimer">
-</form>
+
+{% with delete_url=participant.delete_url %}
+{% include "personal_calender/blocks/delete_form.html" %}
+{% endwith %}
 {% endfor %}
 </body>
 </html>

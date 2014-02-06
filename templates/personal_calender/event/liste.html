@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block titre %}
+    | Liste des événements
+{% endblock titre %}
+{% block content %}
 <ul>
     {% for event in events %}
     <li>
@@ -17,5 +16,4 @@
 <p>
     <a href="/agenda/create/">Créer un nouvel événement</a>
 </p>
-</body>
-</html>
+{% endblock content%}
