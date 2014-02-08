@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-<form action="" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Valider" />
+{% extends "base.html" %}
+
+{% block content %}
+<form action ="" method ="POST" >
+{%csrf_token%}
+{{form.as_p}}
+<input type="submit" value="Valider">
 </form>
-</body>
-</html>
+{% endblock content %}

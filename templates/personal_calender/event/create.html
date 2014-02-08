@@ -1,13 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-<form action="" method="POST">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Créer" />
+{% extends "base.html" %}
+
+{% block titre %}
+    | Créer un évenements
+{% endblock titre %} 
+{% block content %}
+<div class="well">
+<h1>{% if form.initial.nom %} {{form.initial.nom}} {%else%}Nouvel évennement {%endif%}</h1>
+<form action="" method="POST" class="form-horizontal">
+{% csrf_token  %}
+{{form.as_p}}
+<input type="submit" value="{% if form.initial.nom %}Modifier{%else%}Créer{%endif%}" />
 </form>
-</body>
-</html>
+</div>
+{% endblock content %}

@@ -1,29 +1,32 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-<h1>{{ event.nom }}</h1>
-<p>{{ event.description }}</p>
-<p>{{ event.date }}</p>
-<p>{{ event.lieu }}</p>
+{% extends "base.html" %}
 
-{% with delete_url=event.delete_url %}
-{% include "personal_calender/blocks/delete_form.html" %}
-{% endwith %}
+{% block titre %}
+    | Liste des évenements
+{% endblock titre %} 
 
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Créer" />
-</form>
+{% block content %}
+<h1>{{event.nom}}</h1>
+<p>{{event.description}}</p>
+<p>le {{event.date}}</p>
+<p>à {{event.lieu}}</p> 
 {% for participant in event.evenement_participant_set.all %}
-{{ participant.participant }} {{ participant.get_status_display }}
+<div class="well">
+{{participant.participant}}: {{participant.get_status_display}}
 
 {% with delete_url=participant.delete_url %}
 {% include "personal_calender/blocks/delete_form.html" %}
 {% endwith %}
+</p>
+</div>
 {% endfor %}
-</body>
-</html>
+<form action="" method="POST">
+{% csrf_token  %}
+{{form.as_p}}
+<input type="submit" value="Créer" />
+</form>
+
+{% with delete_url=event.delete_url %}
+{% include "personal_calender/blocks/delete_form.html" %}
+{% endwith %}
+<a href="/agenda/{{event.id}}/update/">Modifier</a>
+{% endblock content %}

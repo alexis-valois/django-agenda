@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Profile</title>
-</head>
-<body>
-    <h1>Bienvenu sur votre page personnelle {{ user }} </h1>
-    <a href="/user/logout/">Se déconnecter</a>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+<h1> Bienvenu sur votre page personelle {{user}}</h1>
+<a href = "/user/logout/">Se déconnecter</a>
+{% endblock content %}

@@ -1,19 +1,19 @@
 {% extends "base.html" %}
+
 {% block titre %}
-    | Liste des événements
-{% endblock titre %}
+    | Liste des évenements
+{% endblock titre %} 
+
 {% block content %}
 <ul>
-    {% for event in events %}
-    <li>
-        <h3><a href="{{ event.get_absolute_url }}">{{ event.nom }}</a></h3>
-        <p>le {{ event.date }}</p>
-        <p>à {{ event.lieu }}</p>
-        <p><a href="/agenda/{{ event.id }}/update/">Modifier l'énévement</a></p>
-    </li>
-    {% endfor %}
+{% for event in events %}
+<li>
+   <h3><a href="{{event.get_absolute_url}}">{{event.nom}}</a></h3>
+      <p>le {{event.date}}</p>
+      <p>à {{event.lieu}}</p>
+{% endfor  %}
 </ul>
 <p>
-    <a href="/agenda/create/">Créer un nouvel événement</a>
+<a href="/agenda/create/">Créer un nouvel évenement</a>
 </p>
-{% endblock content%}
+{% endblock content %}

@@ -1,25 +1,23 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>
-        Agenda Partagé
-        {% block titre %}
-        {% endblock titre %}
+<html lang="fr">
+  <head>
+    <title>Agenda partagé
+{% block titre %}{% endblock titre %}
     </title>
-</head>
-<body>
-    <div id="header">
-
-    </div>
-    <div id="menu">
-
-    </div>
-    <div id="content">
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/bootstrap.css">    
+  </head>
+  <body>
+    <div class="container">
+      <div id="header" class="row">
+      </div>
+      <div id="menu" class="row">
+      </div>
+      <div id="content" class="row">
         {% block content %}
-        {% endblock content %}
+        {% endblock content%}
+      </div>
+      <div id="footer" class="row">
+      </div>
     </div>
-    <div id="footer">
-
-    </div>
-</body>
-</html>
+  </body>
+</html> 
