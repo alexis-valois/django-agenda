@@ -1,0 +1,22 @@
+<li>
+ <h3>
+    <a href="" class="titre">
+      {{event.nom}}
+    </a>
+    <a href="{{event.get_absolute_url}}">
+      (details)
+    </a>
+</h3>
+<div class="event">
+<p>{{event.description}}</p>
+<p>le {{event.date}}</p>
+<p>À {{event.lieu}}</p>
+{% for participant in event.evenement_participant_set.all %}
+<div class="well">
+{{participant.participant}}: {{participant.get_status_display}}
+</div>
+
+{% endfor %}
+</div>
+<a href="/agenda/{{event.id}}/update/">Modifier</a>
+</li>

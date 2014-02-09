@@ -11,14 +11,21 @@
 <!-- Chargez jquery -->
 <script src="//code.jquery.com/jquery-1.9.1.js"></script>
 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}/js/datepicker-fr.js">
+<script type="text/javascript" src="{{STATIC_URL}}js/datepicker-fr.js">
 </script>
 <!-- attendez le chargement complet de la page, puis affichez un
 message -->
     <script type="text/javascript">
+
     $('document').ready(function(){
+        $('.event').hide()
         $('#id_date').datepicker()
+        $('.titre').click(function(e){
+           $(this).parent().parent().children('.event').toggle()
+            e.preventDefault()
+        });
     });
+
     </script>
   </head>
   <body>

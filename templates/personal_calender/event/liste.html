@@ -7,10 +7,7 @@
 {% block content %}
 <ul>
 {% for event in events %}
-<li>
-   <h3><a href="{{event.get_absolute_url}}">{{event.nom}}</a></h3>
-      <p>le {{event.date}}</p>
-      <p>à {{event.lieu}}</p>
+{% include "personal_calender/blocks/event_detail.html"  %}
 {% endfor  %}
 </ul>
 <p>
