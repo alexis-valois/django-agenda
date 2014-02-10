@@ -19,14 +19,14 @@
 </p>
 </div>
 {% endfor %}
-<form action="" method="POST">
-{% csrf_token  %}
-{{form.as_p}}
-<input type="submit" value="Créer" />
-</form>
+
+{% include "personal_calender/blocks/participant_form.html" %}
 
 {% with delete_url=event.delete_url %}
 {% include "personal_calender/blocks/delete_form.html" %}
 {% endwith %}
 <a href="/agenda/{{event.id}}/update/">Modifier</a>
+
+
+
 {% endblock content %}
