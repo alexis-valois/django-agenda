@@ -6,6 +6,7 @@ from django.forms import HiddenInput
 from django.template.loader import render_to_string
 from django.template import RequestContext
 from django.http import HttpResponse
+from django.core.paginator import Paginator, InvalidPage, EmptyPage
 import json
 
 def create(request):
@@ -72,6 +73,15 @@ def delete(request, id, participant):
 
 def liste(request):
     events = Evenement.objects.all()
+    paginator = Paginator(events, 10)
+    try:
+        page = int(request.GET.get('page', 1))
+    except ValueError:
+        page = 1
+    try:
+        events = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        events = paginator.page(paginator.num_pages)
     return render(request, 'personal_calender/event/liste.html', {'events': events})
 
 def delete_eve(request, id):

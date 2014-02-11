@@ -6,10 +6,16 @@
 
 {% block content %}
 <ul>
-{% for event in events %}
+{% for event in events.object_list %}
 {% include "personal_calender/blocks/event_detail.html"  %}
 {% endfor  %}
 </ul>
+{% if events.has_previous %}
+    <a href="?page={{ events.previous_page_number }}">Précédent</a>
+{% endif %}
+{% if events.has_next %}
+    <a href="?page={{ events.next_page_number }}">Suivant</a>
+{% endif %}
 <p>
 <a href="/agenda/create/">Créer un nouvel évenement</a>
 </p>
