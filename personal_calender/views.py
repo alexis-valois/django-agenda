@@ -7,7 +7,14 @@ from django.template.loader import render_to_string
 from django.template import RequestContext
 from django.http import HttpResponse
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
-import json
+from django.views.generic import ListView
+import json, datetime
+from django.utils.timezone import utc
+
+class Evenement_Liste(ListView):
+    def get_queryset(self):
+        events = Evenement.objects.filter(participants = self.request.user, date__gte = datetime.datetime.utcnow().replace(tzinfo=utc))
+        return events
 
 def create(request):
     if request.method == "POST":
