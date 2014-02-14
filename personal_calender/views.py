@@ -14,6 +14,8 @@ from django.utils.timezone import utc
 class Evenement_Liste(ListView):
     def get_queryset(self):
         events = Evenement.objects.filter(participants = self.request.user, date__gte = datetime.datetime.utcnow().replace(tzinfo=utc))
+        if "champs" in self.kwargs:
+            events = events.filter((self.kwargs['champs'], self.kwargs['terme']))
         return events
 
 def create(request):
@@ -34,7 +36,7 @@ def details(request, id):
         if form.is_valid():
             form.save()
             if request.is_ajax():
-                delete_form = render_to_string('personal_calender/blocks/delete_form.html',
+                delete_form = render_to_string('blocks/delete_form.html',
                                                {'delete_url': form.instance.delete_url(),},
                                                RequestContext(request)
                 )
@@ -54,7 +56,7 @@ def details(request, id):
         form.fields['evenement'].widget = HiddenInput()
     if request.is_ajax():
         return render_to_response(
-            'personal_calender/blocks/participant_form.html',
+            'blocks/participant_form.html',
             {'event' : event,
              'form': form}
         )
@@ -77,19 +79,6 @@ def delete(request, id, participant):
         return HttpResponse("OK")
 
     return HttpResponseRedirect('/agenda/%s/details/' %id)
-
-def liste(request):
-    events = Evenement.objects.all()
-    paginator = Paginator(events, 10)
-    try:
-        page = int(request.GET.get('page', 1))
-    except ValueError:
-        page = 1
-    try:
-        events = paginator.page(page)
-    except (EmptyPage, InvalidPage):
-        events = paginator.page(paginator.num_pages)
-    return render(request, 'personal_calender/event/liste.html', {'events': events})
 
 def delete_eve(request, id):
     if request.method == "POST":
