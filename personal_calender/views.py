@@ -1,8 +1,7 @@
-from django.shortcuts import render, HttpResponseRedirect, render_to_response
+from django.shortcuts import render, HttpResponseRedirect
 from forms import EventForm, Evenement_ParticipantForm
 from models import Evenement, Evenement_Participant
 from django.contrib.auth.models import User
-from django.forms import HiddenInput
 from django.template.loader import render_to_string
 from django.template import RequestContext
 from django.http import HttpResponse
@@ -41,15 +40,6 @@ class Evenement_Detail(DetailView):
                 return render(request, 'blocks/participant_form.html', {'event' : form.instance.evenement, 'form' : form})
             else:
                 return render(request, 'personal_calender/event/details.html', {'event': form.instance.evenement, 'form' : form})
-def create(request):
-    if request.method == "POST":
-        form = EventForm(request.POST)
-        if form.is_valid():
-            event = form.save()
-            return HttpResponseRedirect('/agenda/%i/details/'%event.pk)
-    else:
-        form = EventForm()
-    return render(request,'personal_calender/event/create.html', {'form':form})
 
 def delete(request, id, participant):
     if request.method == "POST":

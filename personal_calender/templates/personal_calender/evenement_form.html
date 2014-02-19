@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block titre %}
+| Créer un énévement
+{% endblock titre %}
+{% block content %}
+<div class="well">
+<h1>
+    {% if form.initial.nom %} {{ form.initial.nom }} {% else %} Nouvel événement {% endif %}
+</h1>
+<form action="" method="post" class="form-horizontal">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="{% if form.initial.nom %}Modifier{% else %}Créer{% endif %}" />
+</form>
+</div>
+
+{% endblock content %}
