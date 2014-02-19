@@ -6,8 +6,7 @@ from django.forms import HiddenInput
 from django.template.loader import render_to_string
 from django.template import RequestContext
 from django.http import HttpResponse
-from django.core.paginator import Paginator, InvalidPage, EmptyPage
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 import json, datetime
 from django.utils.timezone import utc
 
@@ -18,6 +17,30 @@ class Evenement_Liste(ListView):
             events = events.filter((self.kwargs['champs'], self.kwargs['terme']))
         return events
 
+class Evenement_Detail(DetailView):
+    model = Evenement
+    def get_context_data(self, **kwargs):
+        context = super(Evenement_Detail, self).get_context_data(**kwargs)
+        form = Evenement_ParticipantForm(initial= { 'evenement' : self.object})
+        context['form'] = form
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = Evenement_ParticipantForm(self.request.POST)
+        if form.is_valid():
+            form.save()
+            if self.request.is_ajax():
+                delete_from = render_to_string("blocks/delete_form.html", {'delete_url' : form.instance.delete_url(),}, RequestContext(request))
+                data = {'participant': form.instance.participant.username, 'get_status_display': form.instance.get_status_display(), 'delete_form' : delete_from}
+                return HttpResponse(json.dumps(data), mimetype='application/json')
+            else:
+                return HttpResponseRedirect('/agenda/%s/detail' % id)
+
+        else:
+            if request.is_ajax():
+                return render(request, 'blocks/participant_form.html', {'event' : form.instance.evenement, 'form' : form})
+            else:
+                return render(request, 'personal_calender/event/details.html', {'event': form.instance.evenement, 'form' : form})
 def create(request):
     if request.method == "POST":
         form = EventForm(request.POST)
@@ -27,43 +50,6 @@ def create(request):
     else:
         form = EventForm()
     return render(request,'personal_calender/event/create.html', {'form':form})
-
-def details(request, id):
-
-    event = Evenement.objects.get(pk = id)
-    if request.method == "POST":
-        form = Evenement_ParticipantForm(request.POST)
-        if form.is_valid():
-            form.save()
-            if request.is_ajax():
-                delete_form = render_to_string('blocks/delete_form.html',
-                                               {'delete_url': form.instance.delete_url(),},
-                                               RequestContext(request)
-                )
-                data = {'participant' : form.instance.participant.username,
-                        'get_status_display': form.instance.get_status_display(),
-                        'delete_form' : delete_form
-                }
-                return HttpResponse(
-                    json.dumps(data),
-                    mimetype="application/json"
-                )
-            return HttpResponseRedirect('/agenda/%s/details/' % id)
-    else:
-        form = Evenement_ParticipantForm(initial = {'evenement': event})
-        participants = [user.pk for user in event.participants.all()]
-        form.fields['participant'].queryset = User.objects.exclude(pk__in = participants)
-        form.fields['evenement'].widget = HiddenInput()
-    if request.is_ajax():
-        return render_to_response(
-            'blocks/participant_form.html',
-            {'event' : event,
-             'form': form}
-        )
-
-    return render(request, 'personal_calender/event/details.html',
-        {'event':event,
-        'form': form})
 
 def delete(request, id, participant):
     if request.method == "POST":

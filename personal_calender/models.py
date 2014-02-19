@@ -1,6 +1,7 @@
 #-*-coding:utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 
 class Evenement(models.Model):
     nom = models.CharField(max_length=250, unique=True)
@@ -13,7 +14,7 @@ class Evenement(models.Model):
     lieu = models.TextField()
 
     def get_absolute_url(self):
-        return "/agenda/%s/details" % self.id
+        return reverse('details', kwargs={'pk': self.pk})
 
     def delete_url(self):
         return "/agenda/%s/delete/" % self.id
