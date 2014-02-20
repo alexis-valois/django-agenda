@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponseRedirect
-from forms import EventForm, Evenement_ParticipantForm
+from forms import Evenement_ParticipantForm
 from models import Evenement, Evenement_Participant
 from django.contrib.auth.models import User
 from django.template.loader import render_to_string
@@ -55,21 +55,3 @@ def delete(request, id, participant):
         return HttpResponse("OK")
 
     return HttpResponseRedirect('/agenda/%s/details/' %id)
-
-def delete_eve(request, id):
-    if request.method == "POST":
-        evenement = Evenement.objects.get(pk = id)
-        evenement.delete()
-        return HttpResponseRedirect('/agenda/liste/')
-
-def update_eve(request, id):
-    event = Evenement.objects.get(pk = id)
-    if request.method == "POST":
-        print request.POST
-        form = EventForm(request.POST, instance=event)
-        if form.is_valid():
-            a = form.save()
-            return HttpResponseRedirect('/agenda/%i/details/' % a.pk)
-    else:
-        form = EventForm(instance=event)
-    return render(request, 'personal_calender/event/create.html', {'form':form})
