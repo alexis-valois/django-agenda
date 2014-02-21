@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'south',
     'personal_calender',
     'usermanagement',
+    'addressbook',
 )
 
 MIDDLEWARE_CLASSES = (
