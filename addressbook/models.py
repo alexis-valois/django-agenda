@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 
 class Circle(models.Model):
     name = models.CharField(max_length=250)
@@ -31,5 +32,16 @@ class Contact(models.Model):
         return Circle.objects.filter(owner=user)
 
 
+class Invitation(models.Model):
+    email = models.EmailField()
+    sender = models.ForeignKey(User)
 
+    def __unicode__(self):
+        return self.email
+
+    def get_absolute_url(self):
+        return reverse('invitation_liste')
+
+    class Meta:
+        unique_together=('email', 'sender')
 
